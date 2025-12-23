@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>舒爾特方格 — 數字挑戰</title>
+    <link rel="stylesheet" href="custom.css">
+</head>
+<body>
+    <div class="container">
+        <div id="intro-screen">
+            <h1>點數字挑戰</h1>
+            <p class="description">
+                從 1 到 50 依序點擊數字。<br>
+                挑戰你的反應與視覺搜索速度！
+            </p>
+            <button class="btn" onclick="startGame()">開始遊戲</button>
+        </div>
+
+        <div class="game-area" style="display: none;">
+            <canvas id="pygame-canvas" width="600" height="600"></canvas>
+            <p style="margin-top: 10px; color: #888;">電腦玩家可按 [R] 重洗</p>
+        </div>
+
+        <div id="game-over-screen" style="display: none;">
+            <h1>遊戲結束！</h1>
+            <p id="result-text" class="description"></p>
+            <button class="btn" onclick="restartGame()">再玩一次</button>
+        </div>
+    </div>
+
+    <script src="pyscript.js"></script>
+    <script>
+        function startGame() {
+            document.getElementById('intro-screen').style.display = 'none';
+            document.querySelector('.game-area').style.display = 'flex';
+            resetGame(); // 呼叫 JS 中的函數
+        }
+
+        function restartGame() {
+            document.getElementById('game-over-screen').style.display = 'none';
+            document.querySelector('.game-area').style.display = 'flex';
+            resetGame();
+        }
+    </script>
+</body>
+</html>
