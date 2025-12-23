@@ -58,4 +58,14 @@ h1 { font-size: 36px; color: #333; }
 }
 
 .btn:hover { background: #005fcc; }
+
 .btn:active { transform: scale(0.95); }
+/* 加在檔案末尾 */
+.btn-secondary {
+    background: #6c757d; /* 灰色 */
+    box-shadow: 0 4px 10px rgba(108, 117, 125, 0.3);
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
