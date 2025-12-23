@@ -13,6 +13,14 @@ let gameOver = false;
 let elapsedTime = 0;
 
 function resetGame() {
+    // 確保按下時隱藏結算畫面 (如果是在結算畫面點擊的話)
+    document.getElementById('game-over-screen').style.display = 'none';
+    
+    // 1-25 號放在畫面上
+    numbers = Array.from({length: 25}, (_, i) => i + 1);
+    // ... (其餘程式碼保持不變)
+    
+    
     // 1-25 號放在畫面上
     numbers = Array.from({length: 25}, (_, i) => i + 1);
     // 26-50 號待命
@@ -103,4 +111,5 @@ canvas.addEventListener('touchstart', (e) => {
 
 window.addEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'r') resetGame();
+
 });
