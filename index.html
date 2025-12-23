@@ -17,11 +17,10 @@
             <button class="btn" onclick="startGame()">開始遊戲</button>
         </div>
 
-        <div class="game-area" style="display: none;">
-            <canvas id="pygame-canvas" width="600" height="600"></canvas>
-            <p style="margin-top: 10px; color: #888;">電腦玩家可按 [R] 重洗</p>
-        </div>
-
+       <div class="game-area" style="display: none;">
+    <canvas id="pygame-canvas" width="600" height="600"></canvas>
+    <button class="btn btn-secondary" onclick="resetGame()" style="margin-top: 15px; font-size: 16px; padding: 10px 25px;">重新洗牌</button>
+</div>
         <div id="game-over-screen" style="display: none;">
             <h1>遊戲結束！</h1>
             <p id="result-text" class="description"></p>
@@ -44,4 +43,5 @@
         }
     </script>
 </body>
+
 </html>
