@@ -1,11 +1,30 @@
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: #f8f9fa;
+    /* --- 修改背景圖片的部分 --- */
+    background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba.jpg'); 
+    background-size: cover;         /* 讓圖片填滿整個螢幕 */
+    background-position: center;    /* 圖片居中 */
+    background-attachment: fixed;   /* 滾動時背景固定不移動 */
+    background-repeat: no-repeat;   /* 不重複圖片 */
+    /* ------------------------ */
+    
     text-align: center;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
+    min-height: 100vh; /* 確保背景填滿全螢幕高度 */
+}
+
+.container {
+    margin-top: 50px;
+    padding: 20px;
+    max-width: 600px;
+    /* 加入半透明底色，確保文字在背景圖上清晰可見 */
+    background: rgba(255, 255, 255, 0.85); 
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    backdrop-filter: blur(5px); /* 背景模糊效果，非常有質感 */
 }
 
 .container {
@@ -76,4 +95,5 @@ h1 { font-size: 36px; color: #333; }
     margin-bottom: 10px;
     font-variant-numeric: tabular-nums; /* 避免數字跳動時寬度改變 */
 }
+
 
