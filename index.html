@@ -17,8 +17,11 @@
             <button class="btn" onclick="startGame()">開始遊戲</button>
         </div>
 
-       <div class="game-area" style="display: none;">
+    <div class="game-area" style="display: none;">
+    <div id="timer-display">時間：0.00 秒</div>
+    
     <canvas id="pygame-canvas" width="600" height="600"></canvas>
+    
     <button class="btn btn-secondary" onclick="resetGame()" style="margin-top: 15px; font-size: 16px; padding: 10px 25px;">重新洗牌</button>
 </div>
         <div id="game-over-screen" style="display: none;">
@@ -45,3 +48,4 @@
 </body>
 
 </html>
+
