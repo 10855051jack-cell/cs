@@ -61,25 +61,24 @@ function drawGrid() {
 function handleInput(clientX, clientY) {
     if (gameOver) return;
 
-    const rect = canvas.getBoundingClientRect();
-    // 考慮畫布縮放比例
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    const x = (clientX - rect.left) * scaleX;
-    const y = (clientY - rect.top) * scaleY;
-
-    const col = Math.floor(x / CELL_SIZE);
-    const row = Math.floor(y / CELL_SIZE);
-    const index = row * GRID_SIZE + col;
+    // ... (省略中間座標計算邏輯) ...
 
     if (numbers[index] === currentNumber) {
-        if (currentNumber === 1) startTime = Date.now();
+        if (currentNumber === 1) {
+            startTime = Date.now();
+            // 啟動每 10 毫秒更新一次畫面的計時器
+            timerInterval = setInterval(() => {
+                const now = Date.now();
+                const diff = ((now - startTime) / 1000).toFixed(2);
+                document.getElementById('timer-display').innerText = `時間：${diff} 秒`;
+            }, 10);
+        }
 
-        // 如果還有後備數字就補上，否則變空位
         numbers[index] = nextNumbers.length > 0 ? nextNumbers.shift() : 0;
         currentNumber++;
 
         if (currentNumber > 50) {
+            clearInterval(timerInterval); // 停止計時
             elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);
             gameOver = true;
             showEndScreen();
@@ -87,7 +86,6 @@ function handleInput(clientX, clientY) {
         draw();
     }
 }
-
 function showEndScreen() {
     document.querySelector('.game-area').style.display = 'none';
     const screen = document.getElementById('game-over-screen');
@@ -107,4 +105,5 @@ window.addEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'r') resetGame();
 
 });
+
 
