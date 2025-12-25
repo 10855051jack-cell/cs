@@ -1,7 +1,7 @@
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     /* --- 修改背景圖片的部分 --- */
-    background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba.jpg'); 
+    background-image: url('bg.jpg'); 
     background-size: cover;         /* 讓圖片填滿整個螢幕 */
     background-position: center;    /* 圖片居中 */
     background-attachment: fixed;   /* 滾動時背景固定不移動 */
@@ -95,5 +95,6 @@ h1 { font-size: 36px; color: #333; }
     margin-bottom: 10px;
     font-variant-numeric: tabular-nums; /* 避免數字跳動時寬度改變 */
 }
+
 
 
