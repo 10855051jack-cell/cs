@@ -11,22 +11,16 @@ let currentNumber = 1;
 let startTime = null;
 let gameOver = false;
 let elapsedTime = 0;
-
+let timerInterval = null; // 用來儲存計時器實體
 function resetGame() {
-    // 確保按下時隱藏結算畫面 (如果是在結算畫面點擊的話)
-    document.getElementById('game-over-screen').style.display = 'none';
+    // 停止之前的計時器
+    if (timerInterval) clearInterval(timerInterval); 
     
-    // 1-25 號放在畫面上
+    // 重置 HTML 顯示
+    document.getElementById('timer-display').innerText = "時間：0.00 秒";
+    
     numbers = Array.from({length: 25}, (_, i) => i + 1);
-    // ... (其餘程式碼保持不變)
-    
-    
-    // 1-25 號放在畫面上
-    numbers = Array.from({length: 25}, (_, i) => i + 1);
-    // 26-50 號待命
     nextNumbers = Array.from({length: 25}, (_, i) => i + 26);
-    
-    // 洗牌
     numbers.sort(() => Math.random() - 0.5);
     nextNumbers.sort(() => Math.random() - 0.5);
     
@@ -113,3 +107,4 @@ window.addEventListener('keydown', (e) => {
     if (e.key.toLowerCase() === 'r') resetGame();
 
 });
+
