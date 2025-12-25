@@ -14,16 +14,18 @@ let elapsedTime = 0;
 let timerInterval = null;
 
 function resetGame() {
-    // 1. 停止舊的計時器並重置顯示
-    if (timerInterval) clearInterval(timerInterval);
+    // 1. 停止之前的計時器
+    if (timerInterval) clearInterval(timerInterval); 
+    
+    // 2. 重置顯示資訊
     const timerDisplay = document.getElementById('timer-display');
     if (timerDisplay) timerDisplay.innerText = "時間：0.00 秒";
-
-    // 2. 初始化數字：1-25 號在畫面上，26-50 號待命
+    
+    // 3. 初始化 1-50 數字
     numbers = Array.from({length: 25}, (_, i) => i + 1);
     nextNumbers = Array.from({length: 25}, (_, i) => i + 26);
     
-    // 洗牌
+    // 4. 洗牌
     numbers.sort(() => Math.random() - 0.5);
     nextNumbers.sort(() => Math.random() - 0.5);
     
@@ -31,7 +33,7 @@ function resetGame() {
     startTime = null;
     gameOver = false;
     
-    // 確保介面正確顯示
+    // 5. 確保畫面正確切換
     document.getElementById('game-over-screen').style.display = 'none';
     document.querySelector('.game-area').style.display = 'flex';
     
@@ -55,7 +57,7 @@ function drawGrid() {
             const num = numbers[index];
 
             if (num !== 0) {
-                // 格子顏色：1-25 淺色，26-50 稍微深一點
+                // 格子顏色：後 25 號顏色稍微深一點區分
                 ctx.fillStyle = num <= 25 ? "#ecf0f1" : "#bdc3c7";
                 ctx.fillRect(j * CELL_SIZE + 2, i * CELL_SIZE + 2, CELL_SIZE - 4, CELL_SIZE - 4);
 
@@ -69,8 +71,9 @@ function drawGrid() {
 function handleInput(clientX, clientY) {
     if (gameOver) return;
 
-    // 座標轉換邏輯：將螢幕點擊位置轉換為 Canvas 內部的 600x600 座標
+    // --- 關鍵修復：座標計算邏輯 ---
     const rect = canvas.getBoundingClientRect();
+    // 考慮畫布在不同螢幕上的縮放比例
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
     const x = (clientX - rect.left) * scaleX;
@@ -78,13 +81,17 @@ function handleInput(clientX, clientY) {
 
     const col = Math.floor(x / CELL_SIZE);
     const row = Math.floor(y / CELL_SIZE);
+    
+    // 防呆：確保點擊在網格範圍內
+    if (col < 0 || col >= GRID_SIZE || row < 0 || row >= GRID_SIZE) return;
+    
     const index = row * GRID_SIZE + col;
+    // ----------------------------
 
-    // 檢查點擊是否正確
     if (numbers[index] === currentNumber) {
-        // 點擊第一個數字時開始計時
         if (currentNumber === 1) {
             startTime = Date.now();
+            // 啟動即時計時
             timerInterval = setInterval(() => {
                 const now = Date.now();
                 const diff = ((now - startTime) / 1000).toFixed(2);
@@ -93,16 +100,16 @@ function handleInput(clientX, clientY) {
             }, 10);
         }
 
-        // 補上後備數字 (26-50)，若無則設為 0 (空位)
+        // 補號邏輯：如果有後備數字則補上，否則變空位
         numbers[index] = nextNumbers.length > 0 ? nextNumbers.shift() : 0;
         currentNumber++;
 
-        // 檢查是否完成 50 個數字
         if (currentNumber > 50) {
-            clearInterval(timerInterval);
+            clearInterval(timerInterval); // 停止計時
             elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);
             gameOver = true;
-            setTimeout(showEndScreen, 100); // 稍微延遲讓最後一個數字消失的畫面能渲染出來
+            // 延遲一點顯示結算畫面，讓使用者看清楚最後一格消失
+            setTimeout(showEndScreen, 100);
         }
         draw();
     }
@@ -116,10 +123,10 @@ function showEndScreen() {
     text.innerText = `完成挑戰！總耗時：${elapsedTime} 秒`;
 }
 
-// 事件監聽
+// 監聽事件
 canvas.addEventListener('mousedown', (e) => handleInput(e.clientX, e.clientY));
 canvas.addEventListener('touchstart', (e) => {
-    e.preventDefault(); // 防止手機縮放或滾動
+    e.preventDefault();
     handleInput(e.touches[0].clientX, e.touches[0].clientY);
 }, { passive: false });
 
